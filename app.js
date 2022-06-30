@@ -1,22 +1,22 @@
 const express = require("express");
 require("dotenv").config({});
-const connectToDataBase= require("./utils/db");
+const connectToDataBase = require("./utils/db");
 const port = process.env.PORT;
 const uri = process.env.DBURI;
 
 //routes
-const userRouter=require("./routes/user")
+const userRouter = require("./routes/user");
+const authRouter = require("./routes/auth");
 
 const app = express();
-
 
 // data parsing middleware
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ type: "application/json" }));
 // routers
-app.use("/users",userRouter)
-
+app.use("/users", userRouter);
+app.use("/auth", authRouter);
 
 connectToDataBase(uri, () => {
 	app.listen(port, () => {
