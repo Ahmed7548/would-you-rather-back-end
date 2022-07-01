@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 
 const multer = require("multer")
-const { signup } = require("../controller/auth")
+const { signup, logIn, refreshAccess } = require("../controller/auth")
 
 
 const storage = multer.diskStorage({
@@ -30,6 +30,8 @@ const fileFilter = (req,file,cb) => {
 const uploads = multer({ storage: storage, fileFilter: fileFilter, })
 
 router.post("/signup", uploads.single("image"), signup)
+router.post("/login", logIn)
+router.get("/access",refreshAccess)
 
 
 
