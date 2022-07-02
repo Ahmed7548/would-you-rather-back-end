@@ -45,12 +45,12 @@ exports.logIn = async (req, res, next) => {
 			return res.status(403).json({ msg: "you entered an invvalid password" });
 		}
 		const token = jwt.sign(
-			{ name: user.name, email: user.email },
+			{ name: user.name, email: user.email,id:user._id },
 			process.env.MYSECRET,
 			{ expiresIn: 300 }
 		);
 		const refreshToken = jwt.sign(
-			{ name: user.name, email: user.email },
+			{ name: user.name, email: user.email,id:user._id },
 			process.env.RFSHSECRET,
 			{
 				noTimestamp: false,
@@ -96,7 +96,7 @@ exports.refreshAccess = async (req, res, next) => {
 			return res.status(403).json({ msg: "access denied" });
 		}
 		const token = jwt.sign(
-			{ name: verifiedUser.name, email: verifiedUser.email },
+			{ name: verifiedUser.name, email: verifiedUser.email,id:verifiedUser._id },
 			process.env.MYSECRET,
 			{
 				expiresIn: 300,
