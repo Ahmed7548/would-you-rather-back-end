@@ -8,6 +8,10 @@ const TokenSchema = new mongoose.Schema({
   valid: {
     type: Boolean,
     default:true
+  },
+  email: {
+    type: String,
+    required:true
   }
 }, { timestamps: true })
 
