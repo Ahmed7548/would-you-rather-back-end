@@ -1,4 +1,5 @@
 const Question = require("../model/question");
+const User = require("../model/user");
 
 Question;
 
@@ -19,11 +20,19 @@ exports.addQuestion = async (req, res, next) => {
 			votes: [],
 		},
 	});
+	const addQuestionToUSer = User.where("_id").equals(author).update({
+		$push:{questions:question._id}
+	})
 	try {
-		await question.save();
+		await Promise.all[question.save(),addQuestionToUSer.exec()]
 		res.status(201).json({ msg: "question added successfuly" });
 	} catch (err) {
 		console.log(err);
 		next(err);
 	}
 };
+
+
+exports.getQuestion = (req,res,next) => {
+	
+}
