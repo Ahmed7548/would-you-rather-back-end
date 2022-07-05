@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema(
 		},
 		answers: [
 			{
-				qID: { type: ObjectId, required: true },
+				qId: { type: ObjectId, required: true },
 				answer: { type: String, enum: ["optionOne", "optionTwo"] },
 			},
 		],

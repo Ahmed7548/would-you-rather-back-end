@@ -45,12 +45,12 @@ exports.logIn = async (req, res, next) => {
 			return res.status(403).json({ msg: "you entered an invvalid password" });
 		}
 		const token = jwt.sign(
-			{ name: user.name, email: user.email,id:user._id },
+			{ name: user.name, email: user.email, id: user._id },
 			process.env.MYSECRET,
 			{ expiresIn: 300 }
 		);
 		const refreshToken = jwt.sign(
-			{ name: user.name, email: user.email,id:user._id },
+			{ name: user.name, email: user.email, id: user._id },
 			process.env.RFSHSECRET,
 			{
 				noTimestamp: false,
@@ -62,7 +62,7 @@ exports.logIn = async (req, res, next) => {
 			questions: user.questions,
 			answers: user.answers,
 		};
-		await new Token({ token: refreshToken,email:user.email }).save();
+		await new Token({ token: refreshToken, email: user.email }).save();
 		res.cookie("accessToken", token, { httpOnly: true, maxAge: 500000 });
 		// setting the path on refresh token so it will only be sent when request is made to that specific path
 		res.cookie("refreshToken", refreshToken, { path: "/auth/refresh" });
@@ -92,14 +92,18 @@ exports.refreshAccess = async (req, res, next) => {
 	}
 	try {
 		const storedToken = await Token.findOne({ token: refreshToken });
-		if (!storedToken||!storedToken.valid) {
+		if (!storedToken || !storedToken.valid) {
 			return res.status(403).json({ msg: "access denied" });
 		}
 		const token = jwt.sign(
-			{ name: verifiedUser.name, email: verifiedUser.email,id:verifiedUser._id },
+			{
+				name: verifiedUser.name,
+				email: verifiedUser.email,
+				id: verifiedUser.id,
+			},
 			process.env.MYSECRET,
 			{
-				expiresIn: 300,
+				// expiresIn: 300,
 			}
 		);
 		res.cookie("accessToken", token);
@@ -114,7 +118,7 @@ exports.refreshAccess = async (req, res, next) => {
 exports.signOut = async (req, res, next) => {
 	const { refreshToken } = req.cookies;
 	if (!refreshToken) {
-		return res.status(403).json({msg:"no token provided"})
+		return res.status(403).json({ msg: "no token provided" });
 	}
 	try {
 		await Token.deleteOne({ token: refreshToken });

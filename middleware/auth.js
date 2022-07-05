@@ -44,7 +44,7 @@ exports.checkAccess = (req, res, next) => {
     if (err) {
       return res.status(403).json({msg:"access denied"})
     }
-    req.body.author = decoded.id
+    req.body.user = decoded 
     next()
   })
 }

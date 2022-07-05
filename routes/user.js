@@ -1,8 +1,10 @@
 const express= require("express")
-const { getuser } = require("../controller/user")
+const { getuser, answerQuestion } = require("../controller/user")
+const { checkAccess } = require("../middleware/auth")
 const router = express.Router()
 
-router.get("/users",getuser)
+router.get("/users", getuser)
+router.put("/answer",checkAccess,answerQuestion)
 
 
 
