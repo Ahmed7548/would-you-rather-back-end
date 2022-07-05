@@ -23,7 +23,10 @@ app.use(cookieParser())
 // routers
 app.use("/users", userRouter);
 app.use("/auth", authRouter);
-app.use("/questions",checkAccess,questionRouter)
+app.use("/questions", checkAccess, questionRouter)
+
+app.use((req, res) => {
+})
 
 
 connectToDataBase(uri, () => {

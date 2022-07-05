@@ -1,10 +1,10 @@
 const express = require("express")
-const { addQuestion } = require("../controller/questions")
+const { addQuestion, getQuestions } = require("../controller/questions")
 const router = express.Router()
 
 
 router.post("/question", addQuestion)
-router.get("/questions",)
+router.get("/questions",getQuestions)
 
 
 
