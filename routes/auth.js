@@ -14,23 +14,31 @@ const storage = multer.diskStorage({
   }
 })
 
+
 const fileFilter = (req,file,cb) => {
   console.log(file,"ahooo")
   if (
     file &&
     file.mimetype !== "image/png" &&
     file.mimetype !== "image/jpeg"
-  ) {
-    req.rightExtension = false;
-    return cb(new Error("this wasn't the right exxtension"), false);
+    ) {
+      req.rightExtension = false;
+      return cb(new Error("this wasn't the right exxtension"), false);
+    }
+    cb(null, true);
   }
-  cb(null, true);
-}
-
+  
+ 
+  //validator//ajv instance
+  const ajvInstance= require("../json-schemas/ajv-instance")
+  const validator= require("../middleware/json-validator")
+  
+  
+  
 const uploads = multer({ storage: storage, fileFilter: fileFilter, })
 
-router.post("/signup", uploads.single("image"), signup)
-router.post("/login", logIn)
+router.post("/signup", uploads.single("image"),validator(ajvInstance.getSchema("signup")), signup)
+router.post("/login",validator(ajvInstance.getSchema("login")), logIn)
 router.post("/refresh/sign-out",signOut)
 router.get("/refresh/access",refreshAccess)
 

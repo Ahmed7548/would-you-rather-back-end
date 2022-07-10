@@ -2,11 +2,12 @@ const User = require("../model/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const Token = require("../model/Tokens");
+const {getImgUrl}=require("../utils/helpers")
 
-const getImgUrl = (file) => {
-	console.log(file);
-	return file.path.replaceAll("\\\\", `/`).replace(/public/g, "");
-};
+// const getImgUrl = (file) => {
+// 	console.log(file);
+// 	return file.path.replaceAll("\\\\", `/`).replace(/public/g, "");
+// };
 
 exports.signup = async (req, res, next) => {
 	// return res.send(getImgUrl(req.file))
@@ -14,8 +15,6 @@ exports.signup = async (req, res, next) => {
 		return res.status(403).send("you must enter a file");
 	}
 	const { name, password, confirmedPassword, email } = req.body;
-	console.log(email);
-	console.log(req.file, "isfiel");
 	const imgURL = getImgUrl(req.file);
 	const user = new User({
 		name,

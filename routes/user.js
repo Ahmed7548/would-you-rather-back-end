@@ -1,9 +1,9 @@
 const express= require("express")
-const { getuser, answerQuestion } = require("../controller/user")
+const { getusers, answerQuestion } = require("../controller/user")
 const { checkAccess } = require("../middleware/auth")
 const router = express.Router()
 
-router.get("/users", getuser)
+router.get("/users", checkAccess,getusers)
 router.put("/answer",checkAccess,answerQuestion)
 
 
