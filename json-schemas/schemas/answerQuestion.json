@@ -1,0 +1,18 @@
+{
+  "type":"object",
+  "properties":{
+    "questionId":{
+      "type":"string",
+      "format":"objectId"
+    },
+    "choice":{
+      "type":"string",
+      "enum":["optionOne","optionTwo"]
+    },
+    "user":{
+      "type":"object"
+    }
+  },
+  "additionalProperties":false,
+  "required":["questionId","choice"]
+}

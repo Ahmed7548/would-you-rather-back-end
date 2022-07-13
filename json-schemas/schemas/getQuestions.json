@@ -1,0 +1,25 @@
+{
+	"type": "object",
+	"properties": {
+		"id": {
+			"type": "string",
+			"format": "objectId"
+		},
+		"search": {
+			"type": "string",
+			"format": "alph-numeric"
+		},
+		"page": {
+			"type": ["number", "string"],
+			"format": "positive-intiger"
+		},
+		"limit": {
+			"type": ["number", "string"],
+			"format": "positive-intiger"
+		},
+		"userId": {
+			"type": "string",
+			"format": "objectId"
+		}
+	}
+}

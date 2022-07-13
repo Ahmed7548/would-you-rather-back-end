@@ -24,7 +24,8 @@ const fileFilter = (req,file,cb) => {
     ) {
       req.rightExtension = false;
       return cb(new Error("this wasn't the right exxtension"), false);
-    }
+  }
+  
     cb(null, true);
   }
   

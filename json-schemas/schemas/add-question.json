@@ -1,0 +1,18 @@
+{
+  "type":"object",
+  "properties":{
+    "text":{
+      "type":"string",
+      "format": "alph-numeric"
+    },
+    "optionOne":{
+      "type":"string",
+      "format": "alph-numeric"
+    },
+    "optionTwo":{
+      "type":"string",
+      "format": "alph-numeric"
+    }
+  },
+  "required":["text","optionOne","optionTwo"]
+}

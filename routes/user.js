@@ -1,11 +1,23 @@
-const express= require("express")
-const { getusers, answerQuestion } = require("../controller/user")
-const { checkAccess } = require("../middleware/auth")
-const router = express.Router()
+const express = require("express");
+const { searchUsers, answerQuestion } = require("../controller/user");
+const { checkAccess } = require("../middleware/auth");
+const router = express.Router();
 
-router.get("/users", checkAccess,getusers)
-router.put("/answer",checkAccess,answerQuestion)
+//json validator
+const validator = require("../middleware/json-validator");
+const ajvInstance = require("../json-schemas/ajv-instance");
 
+router.get(
+	"/users",
+	checkAccess,
+	validator(ajvInstance.getSchema("answer-question")),
+	searchUsers
+);
+router.put(
+	"/answer",
+	checkAccess,
+	validator(ajvInstance.getSchema("answer-question")),
+	answerQuestion
+);
 
-
-module.exports=router
+module.exports = router;

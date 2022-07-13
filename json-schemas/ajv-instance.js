@@ -2,16 +2,20 @@ const Ajv = require("ajv")
 const addFormats = require("ajv-formats")
 const ajvInstance = new Ajv({
     allErrors: true,
-    coerceTypes: true
+    coerceTypes: true,
+    allowUnionTypes:true
 })
 addFormats(ajvInstance)
 
 
 
+
 //schemas
 const loginSchema = require("./schemas/login.json")
-const signUpSchema=require("./schemas/sign-up.json")
-
+const signUpSchema = require("./schemas/sign-up.json")
+const addQuestionSchema = require("./schemas/add-question.json")
+const getQuestions = require("./schemas/getQuestions.json")
+const answerQuestion= require("./schemas/answerQuestion.json")
 
 
 //
@@ -77,6 +81,17 @@ ajvInstance.addFormat("positive-number", {
     validate:(input)=>input>=0
 })
 
+ajvInstance.addFormat("positive-intiger", {
+    validate: (input) => {
+        const num=parseFloat(input)
+        if (typeof input === "string") {
+            if (isNaN(num)) return false
+        }
+        if (Math.floor(num) !== num) return false
+        return true
+    }
+})
+
 ajvInstance.addFormat("five-star-rating", {
     validate:(input)=>input>=0&&input<=5
 })
@@ -88,6 +103,9 @@ ajvInstance.addFormat("number-string", {
 
 ajvInstance.addSchema(loginSchema, "login")
 ajvInstance.addSchema(signUpSchema,"signup")
+ajvInstance.addSchema(addQuestionSchema, "add-question")
+ajvInstance.addSchema(getQuestions,"get-questions")
+ajvInstance.addSchema(answerQuestion,"answer-question")
 
 
 

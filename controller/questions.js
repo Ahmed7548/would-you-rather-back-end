@@ -34,16 +34,16 @@ exports.addQuestion = async (req, res, next) => {
 };
 
 exports.getQuestions = async (req, res, next) => {
-	const { userId, questionId, search, page, limit } = req.query;
+	const { userId, id, search, page, limit } = req.query;
 
 	const findQuestions = Question.find();
 
 	if (page && page > 0 && limit) findQuestions.skip(limit * (page - 1));
 	if (limit) findQuestions.limit(limit);
 	if (userId) findQuestions.where("author").equals(userId);
-	if (questionId) findQuestions.where("_id").equals(questionId);
+	if (id) findQuestions.where("_id").equals(id);
 	if (search) findQuestions.where("text").regex(`.*${search}.*`);
-
+	findQuestions.populate("author");
 	try {
 		const questions = await findQuestions;
 		res.status(200).json(questions);
