@@ -34,7 +34,7 @@ exports.addQuestion = async (req, res, next) => {
 };
 
 exports.getQuestions = async (req, res, next) => {
-	const { userId, id, search, page, limit } = req.query;
+	const { userId, id, search, page, limit } = req.body;
 
 	const findQuestions = Question.find();
 

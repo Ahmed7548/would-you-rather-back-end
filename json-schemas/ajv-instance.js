@@ -15,7 +15,9 @@ const loginSchema = require("./schemas/login.json")
 const signUpSchema = require("./schemas/sign-up.json")
 const addQuestionSchema = require("./schemas/add-question.json")
 const getQuestions = require("./schemas/getQuestions.json")
-const answerQuestion= require("./schemas/answerQuestion.json")
+const answerQuestion = require("./schemas/answerQuestion.json")
+const searchUsers=require("./schemas/searchUsers.json")
+const getSingleUser=require("./schemas/getSingleUser.json")
 
 
 //
@@ -106,6 +108,8 @@ ajvInstance.addSchema(signUpSchema,"signup")
 ajvInstance.addSchema(addQuestionSchema, "add-question")
 ajvInstance.addSchema(getQuestions,"get-questions")
 ajvInstance.addSchema(answerQuestion,"answer-question")
+ajvInstance.addSchema(searchUsers,"search-users")
+ajvInstance.addSchema(getSingleUser,"single-user")
 
 
 

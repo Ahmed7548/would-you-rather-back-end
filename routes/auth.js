@@ -32,14 +32,14 @@ const fileFilter = (req,file,cb) => {
  
   //validator//ajv instance
   const ajvInstance= require("../json-schemas/ajv-instance")
-  const validator= require("../middleware/json-validator")
+  const {bodyQueryValidator}= require("../middleware/json-validator")
   
   
   
 const uploads = multer({ storage: storage, fileFilter: fileFilter, })
 
-router.post("/signup", uploads.single("image"),validator(ajvInstance.getSchema("signup")), signup)
-router.post("/login",validator(ajvInstance.getSchema("login")), logIn)
+router.post("/signup", uploads.single("image"),bodyQueryValidator(ajvInstance.getSchema("signup")), signup)
+router.post("/login",bodyQueryValidator(ajvInstance.getSchema("login")), logIn)
 router.post("/refresh/sign-out",signOut)
 router.get("/refresh/access",refreshAccess)
 
