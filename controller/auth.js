@@ -34,8 +34,8 @@ exports.logIn = async (req, res, next) => {
 		if (!user) {
 			return res.status(400).json({ msg: "the email is wrong" });
 		}
-
-		if (!bcrypt.compare(password, user.password)) {
+		const validPassword =await user.checkPassword(password)
+		if (!validPassword) {
 			return res.status(403).json({ msg: "you entered an invvalid password" });
 		}
 		const token = jwt.sign(
@@ -62,9 +62,6 @@ exports.logIn = async (req, res, next) => {
 		res.cookie("refreshToken", refreshToken, { path: "/auth/refresh" });
 		res.status(200).json({
 			...sentUser,
-			password: null,
-			accesToken: token,
-			refreshToken: refreshToken,
 		});
 	} catch (err) {
 		console.log(err);
